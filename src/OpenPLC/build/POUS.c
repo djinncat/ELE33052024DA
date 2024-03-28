@@ -51,8 +51,9 @@ void AQUA_SYS_init__(AQUA_SYS *data__, BOOL retain) {
   __INIT_VAR(data__->HIGH_TEMP,__BOOL_LITERAL(FALSE),retain)
   __INIT_VAR(data__->HEATING,__BOOL_LITERAL(FALSE),retain)
   __INIT_VAR(data__->WATERPUMP,__BOOL_LITERAL(FALSE),retain)
-  __INIT_VAR(data__->FORCE_WPON,__BOOL_LITERAL(FALSE),retain)
-  __INIT_VAR(data__->FORCE_WPOFF,__BOOL_LITERAL(FALSE),retain)
+  __INIT_VAR(data__->WP_ON,__BOOL_LITERAL(FALSE),retain)
+  __INIT_VAR(data__->WP_OFF,__BOOL_LITERAL(FALSE),retain)
+  __INIT_VAR(data__->WPLATCHED,__BOOL_LITERAL(FALSE),retain)
 }
 
 // Code part
@@ -62,7 +63,8 @@ void AQUA_SYS_body__(AQUA_SYS *data__) {
   __SET_VAR(data__->,AIRPUMP,,(!(__GET_VAR(data__->HIGH_DO,)) && (__GET_VAR(data__->AIRPUMP,) || __GET_VAR(data__->LOW_DO,))));
   __SET_VAR(data__->,PHALERT,,__GET_VAR(data__->PH,));
   __SET_VAR(data__->,HEATING,,__GET_VAR(data__->LOW_TEMP,));
-  __SET_VAR(data__->,WATERPUMP,,((__GET_VAR(data__->FORCE_WPON,) || __GET_VAR(data__->HIGH_TEMP,)) && !(__GET_VAR(data__->FORCE_WPOFF,))));
+  __SET_VAR(data__->,WATERPUMP,,(!(__GET_VAR(data__->LOW_TEMP,)) && (__GET_VAR(data__->HIGH_TEMP,) || __GET_VAR(data__->WPLATCHED,))));
+  __SET_VAR(data__->,WPLATCHED,,(!(__GET_VAR(data__->WP_OFF,)) && (__GET_VAR(data__->WP_ON,) || __GET_VAR(data__->WPLATCHED,))));
 
   goto __end;
 

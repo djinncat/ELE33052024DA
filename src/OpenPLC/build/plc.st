@@ -32,14 +32,16 @@ PROGRAM aqua_sys
     high_temp : BOOL;
     heating : BOOL;
     waterpump : BOOL;
-    force_wpon : BOOL;
-    force_wpoff : BOOL;
+    wp_on : BOOL;
+    wp_off : BOOL;
+    wplatched : BOOL;
   END_VAR
 
   airpump := NOT(high_DO) AND (airpump OR low_DO);
   pHalert := pH;
   heating := low_temp;
-  waterpump := (force_wpon OR high_temp) AND NOT(force_wpoff);
+  waterpump := NOT(low_temp) AND (high_temp OR wplatched);
+  wplatched := NOT(wp_off) AND (wp_on OR wplatched);
 END_PROGRAM
 
 

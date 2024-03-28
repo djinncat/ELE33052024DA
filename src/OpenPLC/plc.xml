@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
-<project xmlns="http://www.plcopen.org/xml/tc6_0201" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:ns1="http://www.plcopen.org/xml/tc6.xsd">
+<project xmlns="http://www.plcopen.org/xml/tc6_0201" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:ns1="http://www.plcopen.org/xml/tc6_0201">
   <fileHeader companyName="Unknown" productName="Unnamed" productVersion="1" creationDateTime="2024-03-25T14:39:34"/>
-  <contentHeader name="Unnamed" modificationDateTime="2024-03-25T22:12:18">
+  <contentHeader name="Unnamed" modificationDateTime="2024-03-27T15:07:07">
     <coordinateInfo>
       <fbd>
         <scaling x="10" y="10"/>
@@ -65,12 +65,17 @@
                 <BOOL/>
               </type>
             </variable>
-            <variable name="force_wpon" address="%QX1.1">
+            <variable name="wp_on" address="%QX1.1">
               <type>
                 <BOOL/>
               </type>
             </variable>
-            <variable name="force_wpoff" address="%QX1.2">
+            <variable name="wp_off" address="%QX1.2">
+              <type>
+                <BOOL/>
+              </type>
+            </variable>
+            <variable name="wplatched" address="%QX1.3">
               <type>
                 <BOOL/>
               </type>
@@ -79,7 +84,7 @@
         </interface>
         <body>
           <LD>
-            <leftPowerRail localId="1" width="10" height="280">
+            <leftPowerRail localId="1" width="10" height="400">
               <position x="90" y="60"/>
               <connectionPointOut formalParameter="">
                 <relPosition x="10" y="20"/>
@@ -102,8 +107,17 @@
               <connectionPointOut formalParameter="">
                 <relPosition x="10" y="260"/>
               </connectionPointOut>
+              <connectionPointOut formalParameter="">
+                <relPosition x="10" y="300"/>
+              </connectionPointOut>
+              <connectionPointOut formalParameter="">
+                <relPosition x="10" y="340"/>
+              </connectionPointOut>
+              <connectionPointOut formalParameter="">
+                <relPosition x="10" y="380"/>
+              </connectionPointOut>
             </leftPowerRail>
-            <rightPowerRail localId="2" width="10" height="280">
+            <rightPowerRail localId="2" width="10" height="400">
               <position x="600" y="60"/>
               <connectionPointIn>
                 <relPosition x="0" y="20"/>
@@ -123,8 +137,8 @@
                 <relPosition x="0" y="100"/>
                 <connection refLocalId="10">
                   <position x="600" y="160"/>
-                  <position x="505" y="160"/>
-                  <position x="505" y="200"/>
+                  <position x="490" y="160"/>
+                  <position x="490" y="200"/>
                   <position x="381" y="200"/>
                 </connection>
               </connectionPointIn>
@@ -143,6 +157,19 @@
               </connectionPointIn>
               <connectionPointIn>
                 <relPosition x="0" y="260"/>
+              </connectionPointIn>
+              <connectionPointIn>
+                <relPosition x="0" y="300"/>
+              </connectionPointIn>
+              <connectionPointIn>
+                <relPosition x="0" y="340"/>
+                <connection refLocalId="31">
+                  <position x="600" y="400"/>
+                  <position x="501" y="400"/>
+                </connection>
+              </connectionPointIn>
+              <connectionPointIn>
+                <relPosition x="0" y="380"/>
               </connectionPointIn>
             </rightPowerRail>
             <contact localId="3" negated="true" width="21" height="20">
@@ -269,15 +296,9 @@
               <position x="530" y="270"/>
               <connectionPointIn>
                 <relPosition x="0" y="10"/>
-                <connection refLocalId="16">
+                <connection refLocalId="33">
                   <position x="530" y="280"/>
-                  <position x="320" y="280"/>
-                </connection>
-                <connection refLocalId="18">
-                  <position x="530" y="280"/>
-                  <position x="425" y="280"/>
-                  <position x="425" y="320"/>
-                  <position x="320" y="320"/>
+                  <position x="440" y="280"/>
                 </connection>
               </connectionPointIn>
               <connectionPointOut>
@@ -286,12 +307,12 @@
               <variable>waterpump</variable>
             </coil>
             <contact localId="16" negated="false" width="21" height="20">
-              <position x="300" y="270"/>
+              <position x="160" y="270"/>
               <connectionPointIn>
                 <relPosition x="0" y="10"/>
-                <connection refLocalId="17">
-                  <position x="300" y="280"/>
-                  <position x="201" y="280"/>
+                <connection refLocalId="1">
+                  <position x="160" y="280"/>
+                  <position x="100" y="280"/>
                 </connection>
               </connectionPointIn>
               <connectionPointOut>
@@ -299,35 +320,101 @@
               </connectionPointOut>
               <variable>high_temp</variable>
             </contact>
-            <contact localId="17" negated="true" width="21" height="20">
-              <position x="180" y="270"/>
+            <contact localId="26" negated="false" width="21" height="20">
+              <position x="180" y="390"/>
               <connectionPointIn>
                 <relPosition x="0" y="10"/>
                 <connection refLocalId="1">
-                  <position x="180" y="280"/>
-                  <position x="100" y="280"/>
+                  <position x="180" y="400"/>
+                  <position x="100" y="400"/>
                 </connection>
               </connectionPointIn>
               <connectionPointOut>
                 <relPosition x="21" y="10"/>
               </connectionPointOut>
-              <variable>force_wpoff</variable>
+              <variable>wp_on</variable>
             </contact>
-            <contact localId="18" negated="false" width="21" height="20">
-              <position x="300" y="310"/>
+            <contact localId="30" negated="true" width="21" height="20">
+              <position x="350" y="390"/>
               <connectionPointIn>
                 <relPosition x="0" y="10"/>
-                <connection refLocalId="17">
-                  <position x="300" y="320"/>
-                  <position x="250" y="320"/>
-                  <position x="250" y="280"/>
-                  <position x="201" y="280"/>
+                <connection refLocalId="26">
+                  <position x="350" y="400"/>
+                  <position x="201" y="400"/>
+                </connection>
+                <connection refLocalId="32">
+                  <position x="350" y="400"/>
+                  <position x="275" y="400"/>
+                  <position x="275" y="440"/>
+                  <position x="240" y="440"/>
                 </connection>
               </connectionPointIn>
               <connectionPointOut>
                 <relPosition x="21" y="10"/>
               </connectionPointOut>
-              <variable>force_wpon</variable>
+              <variable>wp_off</variable>
+            </contact>
+            <coil localId="31" negated="false" width="21" height="20">
+              <position x="480" y="390"/>
+              <connectionPointIn>
+                <relPosition x="0" y="10"/>
+                <connection refLocalId="30">
+                  <position x="480" y="400"/>
+                  <position x="371" y="400"/>
+                </connection>
+              </connectionPointIn>
+              <connectionPointOut>
+                <relPosition x="21" y="10"/>
+              </connectionPointOut>
+              <variable>wplatched</variable>
+            </coil>
+            <contact localId="32" negated="false" width="21" height="20">
+              <position x="220" y="430"/>
+              <connectionPointIn>
+                <relPosition x="0" y="10"/>
+                <connection refLocalId="1">
+                  <position x="220" y="440"/>
+                  <position x="100" y="440"/>
+                </connection>
+              </connectionPointIn>
+              <connectionPointOut>
+                <relPosition x="21" y="10"/>
+              </connectionPointOut>
+              <variable>wplatched</variable>
+            </contact>
+            <contact localId="11" negated="false" width="21" height="20" executionOrderId="0">
+              <position x="200" y="310"/>
+              <connectionPointIn>
+                <relPosition x="0" y="10"/>
+                <connection refLocalId="1">
+                  <position x="200" y="320"/>
+                  <position x="100" y="320"/>
+                </connection>
+              </connectionPointIn>
+              <connectionPointOut>
+                <relPosition x="21" y="10"/>
+              </connectionPointOut>
+              <variable>wplatched</variable>
+            </contact>
+            <contact localId="33" negated="true" width="21" height="20">
+              <position x="420" y="270"/>
+              <connectionPointIn>
+                <relPosition x="0" y="10"/>
+                <connection refLocalId="16">
+                  <position x="420" y="280"/>
+                  <position x="181" y="280"/>
+                </connection>
+                <connection refLocalId="11">
+                  <position x="420" y="280"/>
+                  <position x="320" y="280"/>
+                  <position x="320" y="320"/>
+                  <position x="221" y="320"/>
+                </connection>
+              </connectionPointIn>
+              <connectionPointOut>
+                <relPosition x="21" y="10"/>
+              </connectionPointOut>
+              <variable>low_temp</variable>
             </contact>
           </LD>
         </body>
