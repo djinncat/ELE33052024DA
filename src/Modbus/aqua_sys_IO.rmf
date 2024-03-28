@@ -8,9 +8,9 @@ Length=10
 Function=1
 [Window]
 Width=610
-Height=430
-Top=0
-Left=0
+Height=380
+Top=1
+Left=4
 [Alias]
 Alias0=low_DO
 Alias1=high_DO
@@ -21,7 +21,7 @@ Alias5=low_temp
 Alias6=high_temp
 Alias7=heating
 Alias8=waterpump
-Alias9=force_wpon
+Alias9=wp_on
 [BgColor]
 BgColor0=16777215
 BgColor1=16777215
