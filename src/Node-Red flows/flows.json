@@ -1,0 +1,2686 @@
+[
+    {
+        "id": "4d4387372979be1b",
+        "type": "tab",
+        "label": "TTN to Node-RED",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "16aef213c13ea96c",
+        "type": "tab",
+        "label": "Data processing",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "0ecdcae38ddc3783",
+        "type": "tab",
+        "label": "Node-RED to OpenPLC via Modbus",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "b48b9f9049a5e5e9",
+        "type": "tab",
+        "label": "mapper",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "687271a22ceb2cba",
+        "type": "modbus-client",
+        "name": "OpenPLC",
+        "clienttype": "tcp",
+        "bufferCommands": true,
+        "stateLogEnabled": false,
+        "queueLogEnabled": false,
+        "failureLogEnabled": true,
+        "tcpHost": "127.0.0.1",
+        "tcpPort": "502",
+        "tcpType": "DEFAULT",
+        "serialPort": "/dev/ttyUSB",
+        "serialType": "RTU-BUFFERD",
+        "serialBaudrate": "9600",
+        "serialDatabits": "8",
+        "serialStopbits": "1",
+        "serialParity": "none",
+        "serialConnectionDelay": "100",
+        "serialAsciiResponseStartDelimiter": "0x3A",
+        "unit_id": "1",
+        "commandDelay": "1",
+        "clientTimeout": "1000",
+        "reconnectOnTimeout": true,
+        "reconnectTimeout": "2000",
+        "parallelUnitIdsAllowed": true,
+        "showWarnings": true,
+        "showLogs": true
+    },
+    {
+        "id": "bc87e5c3527dec05",
+        "type": "ui_tab",
+        "name": "Home",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "c4f875edd745da49",
+        "type": "ui_base",
+        "theme": {
+            "name": "theme-light",
+            "lightTheme": {
+                "default": "#0094CE",
+                "baseColor": "#0094CE",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": true,
+                "reset": false
+            },
+            "darkTheme": {
+                "default": "#097479",
+                "baseColor": "#097479",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": false
+            },
+            "customTheme": {
+                "name": "Untitled Theme 1",
+                "default": "#4B7930",
+                "baseColor": "#4B7930",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+            },
+            "themeState": {
+                "base-color": {
+                    "default": "#0094CE",
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-titlebar-backgroundColor": {
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-backgroundColor": {
+                    "value": "#fafafa",
+                    "edited": false
+                },
+                "page-sidebar-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-textColor": {
+                    "value": "#1bbfff",
+                    "edited": false
+                },
+                "group-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "widget-textColor": {
+                    "value": "#111111",
+                    "edited": false
+                },
+                "widget-backgroundColor": {
+                    "value": "#0094ce",
+                    "edited": false
+                },
+                "widget-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "base-font": {
+                    "value": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+                }
+            },
+            "angularTheme": {
+                "primary": "indigo",
+                "accents": "blue",
+                "warn": "red",
+                "background": "grey",
+                "palette": "light"
+            }
+        },
+        "site": {
+            "name": "Node-RED Dashboard",
+            "hideToolbar": "false",
+            "allowSwipe": "false",
+            "lockMenu": "false",
+            "allowTempTheme": "true",
+            "dateFormat": "DD/MM/YYYY",
+            "sizes": {
+                "sx": 48,
+                "sy": 48,
+                "gx": 6,
+                "gy": 6,
+                "cx": 6,
+                "cy": 6,
+                "px": 0,
+                "py": 0
+            }
+        }
+    },
+    {
+        "id": "7545ac8528b1c492",
+        "type": "ui_group",
+        "name": "Default",
+        "tab": "bc87e5c3527dec05",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "c0b6a2ef66ac65f2",
+        "type": "mqtt-broker",
+        "name": "TTN Weather Sim",
+        "broker": "au1.cloud.thethings.network",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "c0da1b1d7292a6ed",
+        "type": "mqtt-broker",
+        "name": "TTN IoT Lab",
+        "broker": "au1.cloud.thethings.network",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "05bbae3e32796254",
+        "type": "ui_group",
+        "name": "Dissolved Oxygen",
+        "tab": "bc87e5c3527dec05",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "3ea47541bfdc5abe",
+        "type": "ui_group",
+        "name": "pH",
+        "tab": "bc87e5c3527dec05",
+        "order": 3,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "4f1b3f1c1f3ee6e1",
+        "type": "ui_group",
+        "name": "Water Temp",
+        "tab": "bc87e5c3527dec05",
+        "order": 4,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "30c3335137764428",
+        "type": "mqtt in",
+        "z": "4d4387372979be1b",
+        "name": "",
+        "topic": "v3/weather-sim@ttn/devices/generate-red/up",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "c0b6a2ef66ac65f2",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 290,
+        "y": 140,
+        "wires": [
+            [
+                "8afcf975c58675a5"
+            ]
+        ]
+    },
+    {
+        "id": "8afcf975c58675a5",
+        "type": "debug",
+        "z": "4d4387372979be1b",
+        "name": "debug 2",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 600,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "0b0dea6561648993",
+        "type": "mqtt in",
+        "z": "4d4387372979be1b",
+        "name": "",
+        "topic": "v3/weather-sim@ttn/devices/test-data/up",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "c0b6a2ef66ac65f2",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 280,
+        "y": 240,
+        "wires": [
+            [
+                "8afcf975c58675a5"
+            ]
+        ]
+    },
+    {
+        "id": "b4a76a4798b30da8",
+        "type": "mqtt in",
+        "z": "4d4387372979be1b",
+        "name": "",
+        "topic": "v3/usq-iot-lab-default@ttn/devices/air-quality/up",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "c0da1b1d7292a6ed",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 300,
+        "y": 360,
+        "wires": [
+            [
+                "8afcf975c58675a5"
+            ]
+        ]
+    },
+    {
+        "id": "b384deaf934bf7f9",
+        "type": "mqtt in",
+        "z": "4d4387372979be1b",
+        "name": "",
+        "topic": "v3/usq-iot-lab-default@ttn/devices/soil-moisture/up",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "c0da1b1d7292a6ed",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 310,
+        "y": 420,
+        "wires": [
+            [
+                "8afcf975c58675a5"
+            ]
+        ]
+    },
+    {
+        "id": "7a61ed5e3cac8394",
+        "type": "mqtt in",
+        "z": "4d4387372979be1b",
+        "name": "",
+        "topic": "v3/usq-iot-lab-default@ttn/devices/esp8266-temp/up",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "c0da1b1d7292a6ed",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 310,
+        "y": 480,
+        "wires": [
+            [
+                "8afcf975c58675a5"
+            ]
+        ]
+    },
+    {
+        "id": "d56da96b4eb9076b",
+        "type": "mqtt in",
+        "z": "16aef213c13ea96c",
+        "name": "",
+        "topic": "v3/weather-sim@ttn/devices/test-data/up",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "c0b6a2ef66ac65f2",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 180,
+        "y": 60,
+        "wires": [
+            [
+                "f93a0188389f648e"
+            ]
+        ]
+    },
+    {
+        "id": "d8cadba05541163e",
+        "type": "debug",
+        "z": "16aef213c13ea96c",
+        "name": "debug 3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 880,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "f93a0188389f648e",
+        "type": "function",
+        "z": "16aef213c13ea96c",
+        "name": "base64 to bytes",
+        "func": "// Converting data in base64 to bytes\nvar bytes = Buffer.from(msg.payload.uplink_message.frm_payload,'base64');\nmsg.payload = bytes; //overwriting the payload with contained bytes\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 120,
+        "y": 140,
+        "wires": [
+            [
+                "cab129ae71e1fbf3",
+                "faee238100a41e0f",
+                "f70dd7df4491c579"
+            ]
+        ]
+    },
+    {
+        "id": "cab129ae71e1fbf3",
+        "type": "function",
+        "z": "16aef213c13ea96c",
+        "name": "decodetemp",
+        "func": "const bytes = msg.payload;\nconst temperature = ((bytes[8]<<8)+bytes[9]);  //bytes 8 and 9 hold the temperature values\nlet temp_kelvin = temperature/100;  // temperature is transmitted in kelvin*100. So needs to be divided by 100\nlet temp_C = temp_kelvin - 273.15; // converting from kelvin to celcius\nmsg.payload = temp_C; // overwrite the msg to display temp in celcius\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 110,
+        "y": 260,
+        "wires": [
+            [
+                "d8cadba05541163e",
+                "640ea9b28f5bfcd0",
+                "6c3013248bda7226"
+            ]
+        ]
+    },
+    {
+        "id": "faee238100a41e0f",
+        "type": "function",
+        "z": "16aef213c13ea96c",
+        "name": "decodepH",
+        "func": "const bytes = msg.payload;\nconst ph_data = ((bytes[6]<<8)+bytes[7]);  //bytes 6 and 7 hold the pH value\nlet ph_value = ph_data /10; // the transmission was multiplied by 10, so need to divide by 10 for true value\nlet ph_info = ph_value / (100/14); // scaling the data to the range 0-14 for pH level\nmsg.payload = ph_info;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 130,
+        "y": 480,
+        "wires": [
+            [
+                "82587ca3a350e72b",
+                "d8cadba05541163e",
+                "675a348825439efe"
+            ]
+        ]
+    },
+    {
+        "id": "f70dd7df4491c579",
+        "type": "function",
+        "z": "16aef213c13ea96c",
+        "name": "decodeDO",
+        "func": "const bytes = msg.payload;\nlet DO_data = ((bytes[0]<<8)+bytes[1]);  // the range of bytes 0-1 are 0-5000\nlet DO_value = DO_data / (5000/120); //scaling to the range 0-120%\nmsg.payload = DO_value;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 110,
+        "y": 740,
+        "wires": [
+            [
+                "5ae007843501d312",
+                "1ae254fec298707c",
+                "d8cadba05541163e"
+            ]
+        ]
+    },
+    {
+        "id": "5ae007843501d312",
+        "type": "ui_text",
+        "z": "16aef213c13ea96c",
+        "group": "05bbae3e32796254",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "DO:",
+        "format": "{{msg.payload.toFixed(2)}} %",
+        "layout": "row-spread",
+        "className": "",
+        "x": 550,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "640ea9b28f5bfcd0",
+        "type": "ui_text",
+        "z": "16aef213c13ea96c",
+        "group": "4f1b3f1c1f3ee6e1",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Temperature:",
+        "format": "{{msg.payload.toFixed(2)}} °C",
+        "layout": "row-spread",
+        "className": "",
+        "x": 480,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "95a5fe6a93f0b279",
+        "type": "modbus-write",
+        "z": "16aef213c13ea96c",
+        "name": "Modbus write to low DO",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "unitid": "",
+        "dataType": "Coil",
+        "adr": "0",
+        "quantity": "1",
+        "server": "687271a22ceb2cba",
+        "emptyMsgOnFail": false,
+        "keepMsgProperties": false,
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "x": 870,
+        "y": 780,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "1ae254fec298707c",
+        "type": "switch",
+        "z": "16aef213c13ea96c",
+        "name": "DO status",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "btwn",
+                "v": "80",
+                "vt": "num",
+                "v2": "100",
+                "v2t": "num"
+            },
+            {
+                "t": "lt",
+                "v": "80",
+                "vt": "str"
+            },
+            {
+                "t": "gt",
+                "v": "100",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 3,
+        "x": 280,
+        "y": 840,
+        "wires": [
+            [
+                "08a028700e63bf1d"
+            ],
+            [
+                "a190d35e6ffced2d",
+                "853ab2755792e2e5"
+            ],
+            [
+                "846782d5f07ec518",
+                "187e16faf5d17a3a"
+            ]
+        ]
+    },
+    {
+        "id": "e6823804d66bef3c",
+        "type": "modbus-write",
+        "z": "16aef213c13ea96c",
+        "name": "Modbus write to high DO",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "unitid": "",
+        "dataType": "Coil",
+        "adr": "1",
+        "quantity": "1",
+        "server": "687271a22ceb2cba",
+        "emptyMsgOnFail": false,
+        "keepMsgProperties": false,
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "x": 870,
+        "y": 880,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "089d20bfa16b555c",
+        "type": "modbus-write",
+        "z": "16aef213c13ea96c",
+        "name": "Modbus write to low temp",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "unitid": "",
+        "dataType": "Coil",
+        "adr": "5",
+        "quantity": "1",
+        "server": "687271a22ceb2cba",
+        "emptyMsgOnFail": false,
+        "keepMsgProperties": false,
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "x": 870,
+        "y": 220,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "6c3013248bda7226",
+        "type": "switch",
+        "z": "16aef213c13ea96c",
+        "name": "temp status",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "lte",
+                "v": "18",
+                "vt": "num"
+            },
+            {
+                "t": "gte",
+                "v": "30",
+                "vt": "num"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 3,
+        "x": 290,
+        "y": 280,
+        "wires": [
+            [
+                "374e3c6be56c378b",
+                "069a39b985edddcb"
+            ],
+            [
+                "341caf5ca7ce5598",
+                "3e47d2b6cbf47913"
+            ],
+            [
+                "6c4f21f3acea782b"
+            ]
+        ]
+    },
+    {
+        "id": "a56651bb6583f324",
+        "type": "modbus-write",
+        "z": "16aef213c13ea96c",
+        "name": "Modbus write to high temp",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "unitid": "",
+        "dataType": "Coil",
+        "adr": "6",
+        "quantity": "1",
+        "server": "687271a22ceb2cba",
+        "emptyMsgOnFail": false,
+        "keepMsgProperties": false,
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "x": 860,
+        "y": 300,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "b128ce31c46f16e9",
+        "type": "modbus-write",
+        "z": "16aef213c13ea96c",
+        "name": "Modbus write to ph",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "unitid": "",
+        "dataType": "Coil",
+        "adr": "3",
+        "quantity": "1",
+        "server": "687271a22ceb2cba",
+        "emptyMsgOnFail": false,
+        "keepMsgProperties": false,
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "x": 850,
+        "y": 500,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "82587ca3a350e72b",
+        "type": "switch",
+        "z": "16aef213c13ea96c",
+        "name": "pH status",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "btwn",
+                "v": "6.5",
+                "vt": "num",
+                "v2": "8",
+                "v2t": "num"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 300,
+        "y": 520,
+        "wires": [
+            [
+                "c1d17e68fa2b5ff4"
+            ],
+            [
+                "afece1f2c21f4824"
+            ]
+        ]
+    },
+    {
+        "id": "c1d17e68fa2b5ff4",
+        "type": "change",
+        "z": "16aef213c13ea96c",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "0",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 580,
+        "y": 480,
+        "wires": [
+            [
+                "b128ce31c46f16e9"
+            ]
+        ]
+    },
+    {
+        "id": "08a028700e63bf1d",
+        "type": "change",
+        "z": "16aef213c13ea96c",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "0",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 560,
+        "y": 740,
+        "wires": [
+            [
+                "95a5fe6a93f0b279",
+                "e6823804d66bef3c"
+            ]
+        ]
+    },
+    {
+        "id": "374e3c6be56c378b",
+        "type": "change",
+        "z": "16aef213c13ea96c",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "1",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 580,
+        "y": 200,
+        "wires": [
+            [
+                "089d20bfa16b555c"
+            ]
+        ]
+    },
+    {
+        "id": "6c4f21f3acea782b",
+        "type": "change",
+        "z": "16aef213c13ea96c",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "0",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 580,
+        "y": 360,
+        "wires": [
+            [
+                "a56651bb6583f324",
+                "089d20bfa16b555c"
+            ]
+        ]
+    },
+    {
+        "id": "341caf5ca7ce5598",
+        "type": "change",
+        "z": "16aef213c13ea96c",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "1",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 580,
+        "y": 320,
+        "wires": [
+            [
+                "a56651bb6583f324"
+            ]
+        ]
+    },
+    {
+        "id": "afece1f2c21f4824",
+        "type": "change",
+        "z": "16aef213c13ea96c",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "1",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 580,
+        "y": 540,
+        "wires": [
+            [
+                "b128ce31c46f16e9"
+            ]
+        ]
+    },
+    {
+        "id": "069a39b985edddcb",
+        "type": "change",
+        "z": "16aef213c13ea96c",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "0",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 580,
+        "y": 240,
+        "wires": [
+            [
+                "a56651bb6583f324"
+            ]
+        ]
+    },
+    {
+        "id": "3e47d2b6cbf47913",
+        "type": "change",
+        "z": "16aef213c13ea96c",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "0",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 580,
+        "y": 280,
+        "wires": [
+            [
+                "089d20bfa16b555c"
+            ]
+        ]
+    },
+    {
+        "id": "a190d35e6ffced2d",
+        "type": "change",
+        "z": "16aef213c13ea96c",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "1",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 560,
+        "y": 800,
+        "wires": [
+            [
+                "95a5fe6a93f0b279"
+            ]
+        ]
+    },
+    {
+        "id": "846782d5f07ec518",
+        "type": "change",
+        "z": "16aef213c13ea96c",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "1",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 560,
+        "y": 940,
+        "wires": [
+            [
+                "e6823804d66bef3c"
+            ]
+        ]
+    },
+    {
+        "id": "853ab2755792e2e5",
+        "type": "change",
+        "z": "16aef213c13ea96c",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "0",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 560,
+        "y": 840,
+        "wires": [
+            [
+                "e6823804d66bef3c"
+            ]
+        ]
+    },
+    {
+        "id": "187e16faf5d17a3a",
+        "type": "change",
+        "z": "16aef213c13ea96c",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "0",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 560,
+        "y": 900,
+        "wires": [
+            [
+                "95a5fe6a93f0b279"
+            ]
+        ]
+    },
+    {
+        "id": "675a348825439efe",
+        "type": "ui_gauge",
+        "z": "16aef213c13ea96c",
+        "name": "",
+        "group": "3ea47541bfdc5abe",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "pH Level",
+        "label": "",
+        "format": "{{msg.payload.toFixed(2)}}",
+        "min": 0,
+        "max": "14",
+        "colors": [
+            "#ff0000",
+            "#00ff00",
+            "#400080"
+        ],
+        "seg1": "6.5",
+        "seg2": "8",
+        "diff": false,
+        "className": "",
+        "x": 360,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "a055b2a914152665",
+        "type": "modbus-read",
+        "z": "0ecdcae38ddc3783",
+        "name": "Modbus Read low DO",
+        "topic": "",
+        "showStatusActivities": false,
+        "logIOActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "unitid": "",
+        "dataType": "Coil",
+        "adr": "0",
+        "quantity": "10",
+        "rate": "500",
+        "rateUnit": "ms",
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "server": "687271a22ceb2cba",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "x": 140,
+        "y": 100,
+        "wires": [
+            [
+                "f41f7cd473649f9a"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "7ec9685d60c9f838",
+        "type": "debug",
+        "z": "0ecdcae38ddc3783",
+        "name": "debug 1",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 860,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "73615f7fb302d33b",
+        "type": "modbus-write",
+        "z": "0ecdcae38ddc3783",
+        "name": "",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "unitid": "",
+        "dataType": "Coil",
+        "adr": "1",
+        "quantity": "1",
+        "server": "687271a22ceb2cba",
+        "emptyMsgOnFail": false,
+        "keepMsgProperties": false,
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "x": 660,
+        "y": 280,
+        "wires": [
+            [
+                "7ec9685d60c9f838"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "6d6c056a06643345",
+        "type": "ui_led",
+        "z": "0ecdcae38ddc3783",
+        "order": 2,
+        "group": "05bbae3e32796254",
+        "width": 0,
+        "height": 0,
+        "label": "Low DO",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "#ffffff",
+                "value": "false",
+                "valueType": "bool"
+            },
+            {
+                "color": "#e9f977",
+                "value": "true",
+                "valueType": "bool"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "",
+        "x": 590,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "f41f7cd473649f9a",
+        "type": "change",
+        "z": "0ecdcae38ddc3783",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "msg.payload[0]",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 380,
+        "y": 100,
+        "wires": [
+            [
+                "6d6c056a06643345"
+            ]
+        ]
+    },
+    {
+        "id": "fefbed1210d87504",
+        "type": "ui_button",
+        "z": "0ecdcae38ddc3783",
+        "name": "",
+        "group": "05bbae3e32796254",
+        "order": 6,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Air Pump Off",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 90,
+        "y": 280,
+        "wires": [
+            [
+                "cadedbd932e52903"
+            ]
+        ]
+    },
+    {
+        "id": "cadedbd932e52903",
+        "type": "trigger",
+        "z": "0ecdcae38ddc3783",
+        "name": "",
+        "op1": "true",
+        "op2": "false",
+        "op1type": "bool",
+        "op2type": "bool",
+        "duration": "250",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "ms",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 320,
+        "y": 280,
+        "wires": [
+            [
+                "73615f7fb302d33b",
+                "b2d1258d1a9570a1"
+            ]
+        ]
+    },
+    {
+        "id": "51d64e5a21304360",
+        "type": "modbus-read",
+        "z": "0ecdcae38ddc3783",
+        "name": "Modbus Read pH alert",
+        "topic": "",
+        "showStatusActivities": false,
+        "logIOActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "unitid": "",
+        "dataType": "Coil",
+        "adr": "4",
+        "quantity": "10",
+        "rate": "500",
+        "rateUnit": "ms",
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "server": "687271a22ceb2cba",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "x": 140,
+        "y": 560,
+        "wires": [
+            [
+                "dec6e3084fe122ee"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "985c13acd6375fee",
+        "type": "ui_led",
+        "z": "0ecdcae38ddc3783",
+        "order": 3,
+        "group": "3ea47541bfdc5abe",
+        "width": 0,
+        "height": 0,
+        "label": "Check tanks",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "#ffffff",
+                "value": "0",
+                "valueType": "str"
+            },
+            {
+                "color": "#ff0000",
+                "value": "1",
+                "valueType": "str"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "",
+        "x": 1030,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "9092ac05fb20610e",
+        "type": "modbus-read",
+        "z": "0ecdcae38ddc3783",
+        "name": "Modbus Read low_temp",
+        "topic": "",
+        "showStatusActivities": false,
+        "logIOActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "unitid": "",
+        "dataType": "Coil",
+        "adr": "5",
+        "quantity": "10",
+        "rate": "500",
+        "rateUnit": "ms",
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "server": "687271a22ceb2cba",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "x": 150,
+        "y": 740,
+        "wires": [
+            [
+                "2a537867f8c29567"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "a5c0ac653adde949",
+        "type": "ui_led",
+        "z": "0ecdcae38ddc3783",
+        "order": 2,
+        "group": "4f1b3f1c1f3ee6e1",
+        "width": 0,
+        "height": 0,
+        "label": "Low Temp",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "#ffffff",
+                "value": "false",
+                "valueType": "bool"
+            },
+            {
+                "color": "#00ffff",
+                "value": "true",
+                "valueType": "bool"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "",
+        "x": 590,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "2a537867f8c29567",
+        "type": "change",
+        "z": "0ecdcae38ddc3783",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "msg.payload[0]",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 380,
+        "y": 740,
+        "wires": [
+            [
+                "a5c0ac653adde949"
+            ]
+        ]
+    },
+    {
+        "id": "a30381fca9209638",
+        "type": "modbus-read",
+        "z": "0ecdcae38ddc3783",
+        "name": "Modbus Read high_temp",
+        "topic": "",
+        "showStatusActivities": false,
+        "logIOActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "unitid": "",
+        "dataType": "Coil",
+        "adr": "6",
+        "quantity": "10",
+        "rate": "500",
+        "rateUnit": "ms",
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "server": "687271a22ceb2cba",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "x": 150,
+        "y": 960,
+        "wires": [
+            [
+                "0a3b6ac3704a0591"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "8e591b52b3880b15",
+        "type": "ui_led",
+        "z": "0ecdcae38ddc3783",
+        "order": 4,
+        "group": "4f1b3f1c1f3ee6e1",
+        "width": 0,
+        "height": 0,
+        "label": "High Temp",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "#ffffff",
+                "value": "false",
+                "valueType": "bool"
+            },
+            {
+                "color": "#ff8000",
+                "value": "true",
+                "valueType": "bool"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "",
+        "x": 590,
+        "y": 960,
+        "wires": []
+    },
+    {
+        "id": "0a3b6ac3704a0591",
+        "type": "change",
+        "z": "0ecdcae38ddc3783",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "msg.payload[0]",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 380,
+        "y": 960,
+        "wires": [
+            [
+                "8e591b52b3880b15"
+            ]
+        ]
+    },
+    {
+        "id": "6816e7e7935ba12b",
+        "type": "modbus-read",
+        "z": "0ecdcae38ddc3783",
+        "name": "Modbus Read high DO",
+        "topic": "",
+        "showStatusActivities": false,
+        "logIOActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "unitid": "",
+        "dataType": "Coil",
+        "adr": "1",
+        "quantity": "10",
+        "rate": "500",
+        "rateUnit": "ms",
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "server": "687271a22ceb2cba",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "x": 140,
+        "y": 160,
+        "wires": [
+            [
+                "a0c2f064be863080"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "f2b7bf965f750ba0",
+        "type": "ui_led",
+        "z": "0ecdcae38ddc3783",
+        "order": 3,
+        "group": "05bbae3e32796254",
+        "width": 0,
+        "height": 0,
+        "label": "High DO",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "#ffffff",
+                "value": "false",
+                "valueType": "bool"
+            },
+            {
+                "color": "#e9f977",
+                "value": "true",
+                "valueType": "bool"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "",
+        "x": 590,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "a0c2f064be863080",
+        "type": "change",
+        "z": "0ecdcae38ddc3783",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "msg.payload[0]",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 380,
+        "y": 160,
+        "wires": [
+            [
+                "f2b7bf965f750ba0"
+            ]
+        ]
+    },
+    {
+        "id": "c70aff95cdca6606",
+        "type": "modbus-read",
+        "z": "0ecdcae38ddc3783",
+        "name": "Modbus Read Air pump status",
+        "topic": "",
+        "showStatusActivities": false,
+        "logIOActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "unitid": "",
+        "dataType": "Coil",
+        "adr": "2",
+        "quantity": "10",
+        "rate": "500",
+        "rateUnit": "ms",
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "server": "687271a22ceb2cba",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "x": 160,
+        "y": 220,
+        "wires": [
+            [
+                "63171516ef515333"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "63171516ef515333",
+        "type": "change",
+        "z": "0ecdcae38ddc3783",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "msg.payload[0]",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 420,
+        "y": 220,
+        "wires": [
+            [
+                "36ddf3ec75f33e15"
+            ]
+        ]
+    },
+    {
+        "id": "36ddf3ec75f33e15",
+        "type": "ui_led",
+        "z": "0ecdcae38ddc3783",
+        "order": 4,
+        "group": "05bbae3e32796254",
+        "width": 0,
+        "height": 0,
+        "label": "Air Pump",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "#ffffff",
+                "value": "false",
+                "valueType": "bool"
+            },
+            {
+                "color": "#e9f977",
+                "value": "true",
+                "valueType": "bool"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "",
+        "x": 630,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "b2d1258d1a9570a1",
+        "type": "modbus-write",
+        "z": "0ecdcae38ddc3783",
+        "name": "",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "unitid": "",
+        "dataType": "Coil",
+        "adr": "0",
+        "quantity": "1",
+        "server": "687271a22ceb2cba",
+        "emptyMsgOnFail": false,
+        "keepMsgProperties": false,
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "x": 660,
+        "y": 340,
+        "wires": [
+            [
+                "7ec9685d60c9f838"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "94f568d0bcfbca7a",
+        "type": "debug",
+        "z": "0ecdcae38ddc3783",
+        "name": "debug 4",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 860,
+        "y": 1080,
+        "wires": []
+    },
+    {
+        "id": "eaaeaed340465bcc",
+        "type": "modbus-read",
+        "z": "0ecdcae38ddc3783",
+        "name": "Modbus Read Water Pump",
+        "topic": "",
+        "showStatusActivities": false,
+        "logIOActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "unitid": "",
+        "dataType": "Coil",
+        "adr": "8",
+        "quantity": "10",
+        "rate": "500",
+        "rateUnit": "ms",
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "server": "687271a22ceb2cba",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "x": 150,
+        "y": 1020,
+        "wires": [
+            [
+                "47fc9bfe4d2a83a9"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "4d17138f578b1625",
+        "type": "ui_led",
+        "z": "0ecdcae38ddc3783",
+        "order": 5,
+        "group": "4f1b3f1c1f3ee6e1",
+        "width": 0,
+        "height": 0,
+        "label": "Water Pump",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "#ffffff",
+                "value": "false",
+                "valueType": "bool"
+            },
+            {
+                "color": "#ffff00",
+                "value": "true",
+                "valueType": "bool"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "",
+        "x": 590,
+        "y": 1020,
+        "wires": []
+    },
+    {
+        "id": "47fc9bfe4d2a83a9",
+        "type": "change",
+        "z": "0ecdcae38ddc3783",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "msg.payload[0]",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 380,
+        "y": 1020,
+        "wires": [
+            [
+                "4d17138f578b1625"
+            ]
+        ]
+    },
+    {
+        "id": "d61b0951068d44cf",
+        "type": "modbus-write",
+        "z": "0ecdcae38ddc3783",
+        "name": "",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "unitid": "",
+        "dataType": "Coil",
+        "adr": "9",
+        "quantity": "1",
+        "server": "687271a22ceb2cba",
+        "emptyMsgOnFail": false,
+        "keepMsgProperties": false,
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "x": 660,
+        "y": 1080,
+        "wires": [
+            [
+                "94f568d0bcfbca7a"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "5370ef75ea0e1e1b",
+        "type": "trigger",
+        "z": "0ecdcae38ddc3783",
+        "name": "",
+        "op1": "true",
+        "op2": "false",
+        "op1type": "bool",
+        "op2type": "bool",
+        "duration": "250",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "ms",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 400,
+        "y": 1080,
+        "wires": [
+            [
+                "d61b0951068d44cf"
+            ]
+        ]
+    },
+    {
+        "id": "015dc9bf336fc50e",
+        "type": "ui_button",
+        "z": "0ecdcae38ddc3783",
+        "name": "",
+        "group": "4f1b3f1c1f3ee6e1",
+        "order": 6,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Water Pump On",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 100,
+        "y": 1080,
+        "wires": [
+            [
+                "5370ef75ea0e1e1b"
+            ]
+        ]
+    },
+    {
+        "id": "d16f55192314d28f",
+        "type": "modbus-write",
+        "z": "0ecdcae38ddc3783",
+        "name": "",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "unitid": "",
+        "dataType": "Coil",
+        "adr": "0",
+        "quantity": "1",
+        "server": "687271a22ceb2cba",
+        "emptyMsgOnFail": false,
+        "keepMsgProperties": false,
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "x": 660,
+        "y": 400,
+        "wires": [
+            [
+                "7ec9685d60c9f838"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "178d1fdac9ee6157",
+        "type": "ui_button",
+        "z": "0ecdcae38ddc3783",
+        "name": "",
+        "group": "05bbae3e32796254",
+        "order": 5,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Air Pump On",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 90,
+        "y": 380,
+        "wires": [
+            [
+                "f184600b83fade61"
+            ]
+        ]
+    },
+    {
+        "id": "f184600b83fade61",
+        "type": "trigger",
+        "z": "0ecdcae38ddc3783",
+        "name": "",
+        "op1": "true",
+        "op2": "false",
+        "op1type": "bool",
+        "op2type": "bool",
+        "duration": "500",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "ms",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 320,
+        "y": 380,
+        "wires": [
+            [
+                "d16f55192314d28f"
+            ]
+        ]
+    },
+    {
+        "id": "914fc760d129df56",
+        "type": "debug",
+        "z": "0ecdcae38ddc3783",
+        "name": "debug 5",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 860,
+        "y": 1140,
+        "wires": []
+    },
+    {
+        "id": "a209d672bc8322a7",
+        "type": "trigger",
+        "z": "0ecdcae38ddc3783",
+        "name": "",
+        "op1": "true",
+        "op2": "false",
+        "op1type": "bool",
+        "op2type": "bool",
+        "duration": "250",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "ms",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 400,
+        "y": 1140,
+        "wires": [
+            [
+                "7c47dde760d27739"
+            ]
+        ]
+    },
+    {
+        "id": "793b766063d8c648",
+        "type": "ui_button",
+        "z": "0ecdcae38ddc3783",
+        "name": "",
+        "group": "4f1b3f1c1f3ee6e1",
+        "order": 7,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Water Pump Off",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 100,
+        "y": 1140,
+        "wires": [
+            [
+                "a209d672bc8322a7"
+            ]
+        ]
+    },
+    {
+        "id": "7c47dde760d27739",
+        "type": "modbus-write",
+        "z": "0ecdcae38ddc3783",
+        "name": "",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "unitid": "",
+        "dataType": "Coil",
+        "adr": "10",
+        "quantity": "1",
+        "server": "687271a22ceb2cba",
+        "emptyMsgOnFail": false,
+        "keepMsgProperties": false,
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "x": 660,
+        "y": 1140,
+        "wires": [
+            [
+                "914fc760d129df56"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "2f5fc5856c44eff1",
+        "type": "comment",
+        "z": "0ecdcae38ddc3783",
+        "name": "Dissolved Oxygen",
+        "info": "",
+        "x": 330,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "a4460141bcbf690f",
+        "type": "comment",
+        "z": "0ecdcae38ddc3783",
+        "name": "pH Alert",
+        "info": "",
+        "x": 330,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "1ca0670ef23f2c5f",
+        "type": "comment",
+        "z": "0ecdcae38ddc3783",
+        "name": "Low Water Temp",
+        "info": "",
+        "x": 340,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "7fce745f8e49ed3d",
+        "type": "modbus-read",
+        "z": "0ecdcae38ddc3783",
+        "name": "Modbus Read Heater",
+        "topic": "",
+        "showStatusActivities": false,
+        "logIOActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "unitid": "",
+        "dataType": "Coil",
+        "adr": "7",
+        "quantity": "10",
+        "rate": "500",
+        "rateUnit": "ms",
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "server": "687271a22ceb2cba",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "x": 140,
+        "y": 800,
+        "wires": [
+            [
+                "e435409260a0d793"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "fbce915c5cf6755c",
+        "type": "ui_led",
+        "z": "0ecdcae38ddc3783",
+        "order": 3,
+        "group": "4f1b3f1c1f3ee6e1",
+        "width": 0,
+        "height": 0,
+        "label": "Heater",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "#ffffff",
+                "value": "false",
+                "valueType": "bool"
+            },
+            {
+                "color": "#ffff00",
+                "value": "true",
+                "valueType": "bool"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "",
+        "x": 590,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "e435409260a0d793",
+        "type": "change",
+        "z": "0ecdcae38ddc3783",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "msg.payload[0]",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 380,
+        "y": 800,
+        "wires": [
+            [
+                "fbce915c5cf6755c"
+            ]
+        ]
+    },
+    {
+        "id": "ddfc15e8ef8d4a14",
+        "type": "comment",
+        "z": "0ecdcae38ddc3783",
+        "name": "High Water Temp",
+        "info": "",
+        "x": 340,
+        "y": 900,
+        "wires": []
+    },
+    {
+        "id": "4ccd3e4c.b98bf",
+        "type": "trigger",
+        "z": "0ecdcae38ddc3783",
+        "name": "",
+        "op1": "1",
+        "op2": "0",
+        "op1type": "str",
+        "op2type": "str",
+        "duration": "500",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "ms",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 820,
+        "y": 600,
+        "wires": [
+            [
+                "16ddf53a.98e803",
+                "985c13acd6375fee"
+            ]
+        ]
+    },
+    {
+        "id": "16ddf53a.98e803",
+        "type": "function",
+        "z": "0ecdcae38ddc3783",
+        "name": "",
+        "func": "if (msg.payload == \"off\")\n\tcontext.state = 0;\nif (msg.payload == \"on\")\n\tcontext.state = 1;\n\nif (context.state == 1)\n{\n\tif (msg.payload == 0)\n\t\treturn msg;\n\telse\n\t\treturn;\n}\nelse\n\treturn;",
+        "outputs": 1,
+        "x": 760,
+        "y": 700,
+        "wires": [
+            [
+                "99d5a96a.8fc36"
+            ]
+        ]
+    },
+    {
+        "id": "61bafd4.4f5c604",
+        "type": "switch",
+        "z": "0ecdcae38ddc3783",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "on",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "off",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 570,
+        "y": 620,
+        "wires": [
+            [
+                "16ddf53a.98e803",
+                "4ccd3e4c.b98bf"
+            ],
+            [
+                "16ddf53a.98e803"
+            ]
+        ]
+    },
+    {
+        "id": "58285cdd.9f4914",
+        "type": "change",
+        "z": "0ecdcae38ddc3783",
+        "name": "Switch off",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "off",
+                "tot": "str"
+            }
+        ],
+        "x": 760,
+        "y": 520,
+        "wires": [
+            [
+                "61bafd4.4f5c604"
+            ]
+        ]
+    },
+    {
+        "id": "dec6e3084fe122ee",
+        "type": "change",
+        "z": "0ecdcae38ddc3783",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "on",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 360,
+        "y": 560,
+        "wires": [
+            [
+                "61bafd4.4f5c604",
+                "4e642f9c.8f4e58"
+            ]
+        ]
+    },
+    {
+        "id": "4e642f9c.8f4e58",
+        "type": "delay",
+        "z": "0ecdcae38ddc3783",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "2",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 580,
+        "y": 520,
+        "wires": [
+            [
+                "58285cdd.9f4914"
+            ]
+        ]
+    },
+    {
+        "id": "99d5a96a.8fc36",
+        "type": "delay",
+        "z": "0ecdcae38ddc3783",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "250",
+        "timeoutUnits": "milliseconds",
+        "rate": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "outputs": 1,
+        "x": 930,
+        "y": 700,
+        "wires": [
+            [
+                "4ccd3e4c.b98bf"
+            ]
+        ]
+    },
+    {
+        "id": "cd8b35e397dc4617",
+        "type": "http request",
+        "z": "b48b9f9049a5e5e9",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://mapper.kist.ws/upload?studentid=61019160&nickname=KHB&temp={{{temp}}}&hum={{{pH}}}&rain={{{DO}}}&message=aquaponics%20system&valid",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 730,
+        "y": 400,
+        "wires": [
+            [
+                "eeb1f7bdf17dbe31"
+            ]
+        ]
+    },
+    {
+        "id": "eeb1f7bdf17dbe31",
+        "type": "debug",
+        "z": "b48b9f9049a5e5e9",
+        "name": "msg",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 850,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "c21bb72bd0515caa",
+        "type": "mqtt in",
+        "z": "b48b9f9049a5e5e9",
+        "name": "",
+        "topic": "v3/weather-sim@ttn/devices/test-data/up",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "c0b6a2ef66ac65f2",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 220,
+        "y": 40,
+        "wires": [
+            [
+                "aabda99c56e79ae7"
+            ]
+        ]
+    },
+    {
+        "id": "aabda99c56e79ae7",
+        "type": "function",
+        "z": "b48b9f9049a5e5e9",
+        "name": "base64 to bytes",
+        "func": "// Converting data in base64 to bytes\nvar bytes = Buffer.from(msg.payload.uplink_message.frm_payload,'base64');\nmsg.payload = bytes; //overwriting the payload with contained bytes\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 160,
+        "y": 120,
+        "wires": [
+            [
+                "e0ac28c006d94f16",
+                "fc2edc4f86d06b41",
+                "7b1cc0e4b722619e"
+            ]
+        ]
+    },
+    {
+        "id": "e0ac28c006d94f16",
+        "type": "function",
+        "z": "b48b9f9049a5e5e9",
+        "name": "decodetemp",
+        "func": "const bytes = msg.payload;\nconst temperature = ((bytes[8]<<8)+bytes[9]);  //bytes 8 and 9 hold the temperature values\nlet temp_kelvin = temperature/100;  // temperature is transmitted in kelvin*100. So needs to be divided by 100\nlet temp_C = temp_kelvin - 273.15; // converting from kelvin to celcius\nmsg.payload = temp_C.toFixed(2) +\"°C\"; // overwrite the msg to display temp in celcius\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 150,
+        "y": 240,
+        "wires": [
+            [
+                "f4087936ba9bd709"
+            ]
+        ]
+    },
+    {
+        "id": "f4087936ba9bd709",
+        "type": "change",
+        "z": "b48b9f9049a5e5e9",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "temp",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 380,
+        "y": 240,
+        "wires": [
+            [
+                "6cc22a92434c22f3"
+            ]
+        ]
+    },
+    {
+        "id": "fc2edc4f86d06b41",
+        "type": "function",
+        "z": "b48b9f9049a5e5e9",
+        "name": "decodepH",
+        "func": "const bytes = msg.payload;\nconst ph_data = ((bytes[6]<<8)+bytes[7]);  //bytes 6 and 7 hold the pH value\nlet ph_value = ph_data /10; // the transmission was multiplied by 10, so need to divide by 10 for true value\nlet ph_info = ph_value / (100/14); // scaling the data to the range 0-14 for pH level\nmsg.payload = ph_info.toFixed(2);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 150,
+        "y": 320,
+        "wires": [
+            [
+                "52fb21a3f8996b9e"
+            ]
+        ]
+    },
+    {
+        "id": "7b1cc0e4b722619e",
+        "type": "function",
+        "z": "b48b9f9049a5e5e9",
+        "name": "decodeDO",
+        "func": "const bytes = msg.payload;\nlet DO_data = ((bytes[0]<<8)+bytes[1]);  // the range of bytes 0-1 are 0-5000\nlet DO_value = DO_data / (5000/120); //scaling to the range 0-120%\nmsg.payload = DO_value.toFixed(2)+\"%\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 150,
+        "y": 400,
+        "wires": [
+            [
+                "38bb68c57f1516cf"
+            ]
+        ]
+    },
+    {
+        "id": "52fb21a3f8996b9e",
+        "type": "change",
+        "z": "b48b9f9049a5e5e9",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "pH",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 370,
+        "y": 320,
+        "wires": [
+            [
+                "6cc22a92434c22f3"
+            ]
+        ]
+    },
+    {
+        "id": "38bb68c57f1516cf",
+        "type": "change",
+        "z": "b48b9f9049a5e5e9",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "DO",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 370,
+        "y": 400,
+        "wires": [
+            [
+                "6cc22a92434c22f3"
+            ]
+        ]
+    },
+    {
+        "id": "6cc22a92434c22f3",
+        "type": "join",
+        "z": "b48b9f9049a5e5e9",
+        "name": "info",
+        "mode": "custom",
+        "build": "array",
+        "property": "",
+        "propertyType": "full",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": false,
+        "timeout": "",
+        "count": "3",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "num",
+        "reduceFixup": "",
+        "x": 610,
+        "y": 320,
+        "wires": [
+            [
+                "cd8b35e397dc4617",
+                "eeb1f7bdf17dbe31"
+            ]
+        ]
+    }
+]
