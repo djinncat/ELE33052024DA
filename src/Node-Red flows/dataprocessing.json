@@ -1,0 +1,874 @@
+[
+    {
+        "id": "16aef213c13ea96c",
+        "type": "tab",
+        "label": "Data processing",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "d8cadba05541163e",
+        "type": "debug",
+        "z": "16aef213c13ea96c",
+        "name": "debug 3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 880,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "f93a0188389f648e",
+        "type": "function",
+        "z": "16aef213c13ea96c",
+        "name": "base64 to bytes",
+        "func": "// Separating data in base64 to individual bytes  (hexadecimal)\nvar hexbytes = Buffer.from(msg.payload.uplink_message.frm_payload,'base64');\nmsg.payload = hexbytes; //overwriting the payload with the hex values\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 120,
+        "y": 140,
+        "wires": [
+            [
+                "cab129ae71e1fbf3",
+                "faee238100a41e0f",
+                "f70dd7df4491c579",
+                "10e614d33009d347"
+            ]
+        ]
+    },
+    {
+        "id": "cab129ae71e1fbf3",
+        "type": "function",
+        "z": "16aef213c13ea96c",
+        "name": "decodetemp",
+        "func": "const bytes = msg.payload;  // holding all bytes from the payload\nconst temperature = ((bytes[8]<<8)+bytes[9]);  //bytes 8 and 9 hold the temperature values\nlet temp_kelvin = temperature/100;  // temperature is transmitted in kelvin*100. So needs to be divided by 100\nlet temp_C = temp_kelvin - 273.15; // converting from kelvin to celcius\nmsg.payload = temp_C; // overwrite the msg to display temp in celcius\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 110,
+        "y": 260,
+        "wires": [
+            [
+                "d8cadba05541163e",
+                "640ea9b28f5bfcd0",
+                "6c3013248bda7226"
+            ]
+        ]
+    },
+    {
+        "id": "faee238100a41e0f",
+        "type": "function",
+        "z": "16aef213c13ea96c",
+        "name": "decodepH",
+        "func": "const bytes = msg.payload;   // holding the bytes of the payload\nconst ph_data = ((bytes[6]<<8)+bytes[7]);  //bytes 6 and 7 hold the pH value\nlet ph_value = ph_data /10; // the transmission was multiplied by 10, so need to divide by 10 for true value\nlet ph_info = ph_value / (100/14); // scaling the data to the range 0-14 for pH level\nmsg.payload = ph_info;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 130,
+        "y": 480,
+        "wires": [
+            [
+                "82587ca3a350e72b",
+                "d8cadba05541163e",
+                "675a348825439efe"
+            ]
+        ]
+    },
+    {
+        "id": "f70dd7df4491c579",
+        "type": "function",
+        "z": "16aef213c13ea96c",
+        "name": "decodeDO",
+        "func": "const bytes = msg.payload;  // holding all the bytes of the payload\nlet DO_data = ((bytes[0]<<8)+bytes[1]);  \n// the byte needs to be shifted because low byte of transmission is the highest byte of value\n// the range is 0-5000\nlet DO_value = DO_data / (5000/120); //scaling to the DO range 0-120%\nmsg.payload = DO_value;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 110,
+        "y": 740,
+        "wires": [
+            [
+                "5ae007843501d312",
+                "1ae254fec298707c",
+                "d8cadba05541163e"
+            ]
+        ]
+    },
+    {
+        "id": "5ae007843501d312",
+        "type": "ui_text",
+        "z": "16aef213c13ea96c",
+        "group": "05bbae3e32796254",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "DO:",
+        "format": "{{msg.payload.toFixed(2)}} %",
+        "layout": "row-spread",
+        "className": "",
+        "x": 550,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "640ea9b28f5bfcd0",
+        "type": "ui_text",
+        "z": "16aef213c13ea96c",
+        "group": "4f1b3f1c1f3ee6e1",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Temperature:",
+        "format": "{{msg.payload.toFixed(2)}} °C",
+        "layout": "row-spread",
+        "className": "",
+        "x": 480,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "95a5fe6a93f0b279",
+        "type": "modbus-write",
+        "z": "16aef213c13ea96c",
+        "name": "Modbus write to low DO",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "unitid": "",
+        "dataType": "Coil",
+        "adr": "0",
+        "quantity": "1",
+        "server": "687271a22ceb2cba",
+        "emptyMsgOnFail": false,
+        "keepMsgProperties": false,
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "x": 870,
+        "y": 780,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "1ae254fec298707c",
+        "type": "switch",
+        "z": "16aef213c13ea96c",
+        "name": "DO status",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "btwn",
+                "v": "80",
+                "vt": "num",
+                "v2": "100",
+                "v2t": "num"
+            },
+            {
+                "t": "lt",
+                "v": "80",
+                "vt": "str"
+            },
+            {
+                "t": "gt",
+                "v": "100",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 3,
+        "x": 280,
+        "y": 840,
+        "wires": [
+            [
+                "08a028700e63bf1d"
+            ],
+            [
+                "a190d35e6ffced2d",
+                "853ab2755792e2e5"
+            ],
+            [
+                "846782d5f07ec518",
+                "187e16faf5d17a3a"
+            ]
+        ]
+    },
+    {
+        "id": "e6823804d66bef3c",
+        "type": "modbus-write",
+        "z": "16aef213c13ea96c",
+        "name": "Modbus write to high DO",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "unitid": "",
+        "dataType": "Coil",
+        "adr": "1",
+        "quantity": "1",
+        "server": "687271a22ceb2cba",
+        "emptyMsgOnFail": false,
+        "keepMsgProperties": false,
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "x": 870,
+        "y": 880,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "089d20bfa16b555c",
+        "type": "modbus-write",
+        "z": "16aef213c13ea96c",
+        "name": "Modbus write to low temp",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "unitid": "",
+        "dataType": "Coil",
+        "adr": "5",
+        "quantity": "1",
+        "server": "687271a22ceb2cba",
+        "emptyMsgOnFail": false,
+        "keepMsgProperties": false,
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "x": 870,
+        "y": 220,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "6c3013248bda7226",
+        "type": "switch",
+        "z": "16aef213c13ea96c",
+        "name": "temp status",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "lte",
+                "v": "18",
+                "vt": "num"
+            },
+            {
+                "t": "gte",
+                "v": "30",
+                "vt": "num"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 3,
+        "x": 290,
+        "y": 280,
+        "wires": [
+            [
+                "374e3c6be56c378b",
+                "069a39b985edddcb"
+            ],
+            [
+                "341caf5ca7ce5598",
+                "3e47d2b6cbf47913"
+            ],
+            [
+                "6c4f21f3acea782b"
+            ]
+        ]
+    },
+    {
+        "id": "a56651bb6583f324",
+        "type": "modbus-write",
+        "z": "16aef213c13ea96c",
+        "name": "Modbus write to high temp",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "unitid": "",
+        "dataType": "Coil",
+        "adr": "6",
+        "quantity": "1",
+        "server": "687271a22ceb2cba",
+        "emptyMsgOnFail": false,
+        "keepMsgProperties": false,
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "x": 860,
+        "y": 300,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "b128ce31c46f16e9",
+        "type": "modbus-write",
+        "z": "16aef213c13ea96c",
+        "name": "Modbus write to ph",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "unitid": "",
+        "dataType": "Coil",
+        "adr": "3",
+        "quantity": "1",
+        "server": "687271a22ceb2cba",
+        "emptyMsgOnFail": false,
+        "keepMsgProperties": false,
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "x": 850,
+        "y": 500,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "82587ca3a350e72b",
+        "type": "switch",
+        "z": "16aef213c13ea96c",
+        "name": "pH status",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "btwn",
+                "v": "6.5",
+                "vt": "num",
+                "v2": "8",
+                "v2t": "num"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 300,
+        "y": 520,
+        "wires": [
+            [
+                "c1d17e68fa2b5ff4"
+            ],
+            [
+                "afece1f2c21f4824"
+            ]
+        ]
+    },
+    {
+        "id": "c1d17e68fa2b5ff4",
+        "type": "change",
+        "z": "16aef213c13ea96c",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "0",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 580,
+        "y": 480,
+        "wires": [
+            [
+                "b128ce31c46f16e9"
+            ]
+        ]
+    },
+    {
+        "id": "08a028700e63bf1d",
+        "type": "change",
+        "z": "16aef213c13ea96c",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "0",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 560,
+        "y": 740,
+        "wires": [
+            [
+                "95a5fe6a93f0b279",
+                "e6823804d66bef3c"
+            ]
+        ]
+    },
+    {
+        "id": "374e3c6be56c378b",
+        "type": "change",
+        "z": "16aef213c13ea96c",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "1",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 580,
+        "y": 200,
+        "wires": [
+            [
+                "089d20bfa16b555c"
+            ]
+        ]
+    },
+    {
+        "id": "6c4f21f3acea782b",
+        "type": "change",
+        "z": "16aef213c13ea96c",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "0",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 580,
+        "y": 360,
+        "wires": [
+            [
+                "a56651bb6583f324",
+                "089d20bfa16b555c"
+            ]
+        ]
+    },
+    {
+        "id": "341caf5ca7ce5598",
+        "type": "change",
+        "z": "16aef213c13ea96c",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "1",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 580,
+        "y": 320,
+        "wires": [
+            [
+                "a56651bb6583f324"
+            ]
+        ]
+    },
+    {
+        "id": "afece1f2c21f4824",
+        "type": "change",
+        "z": "16aef213c13ea96c",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "1",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 580,
+        "y": 540,
+        "wires": [
+            [
+                "b128ce31c46f16e9"
+            ]
+        ]
+    },
+    {
+        "id": "069a39b985edddcb",
+        "type": "change",
+        "z": "16aef213c13ea96c",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "0",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 580,
+        "y": 240,
+        "wires": [
+            [
+                "a56651bb6583f324"
+            ]
+        ]
+    },
+    {
+        "id": "3e47d2b6cbf47913",
+        "type": "change",
+        "z": "16aef213c13ea96c",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "0",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 580,
+        "y": 280,
+        "wires": [
+            [
+                "089d20bfa16b555c"
+            ]
+        ]
+    },
+    {
+        "id": "a190d35e6ffced2d",
+        "type": "change",
+        "z": "16aef213c13ea96c",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "1",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 560,
+        "y": 800,
+        "wires": [
+            [
+                "95a5fe6a93f0b279"
+            ]
+        ]
+    },
+    {
+        "id": "846782d5f07ec518",
+        "type": "change",
+        "z": "16aef213c13ea96c",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "1",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 560,
+        "y": 940,
+        "wires": [
+            [
+                "e6823804d66bef3c"
+            ]
+        ]
+    },
+    {
+        "id": "853ab2755792e2e5",
+        "type": "change",
+        "z": "16aef213c13ea96c",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "0",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 560,
+        "y": 840,
+        "wires": [
+            [
+                "e6823804d66bef3c"
+            ]
+        ]
+    },
+    {
+        "id": "187e16faf5d17a3a",
+        "type": "change",
+        "z": "16aef213c13ea96c",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "0",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 560,
+        "y": 900,
+        "wires": [
+            [
+                "95a5fe6a93f0b279"
+            ]
+        ]
+    },
+    {
+        "id": "675a348825439efe",
+        "type": "ui_gauge",
+        "z": "16aef213c13ea96c",
+        "name": "",
+        "group": "3ea47541bfdc5abe",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "pH Level",
+        "label": "",
+        "format": "{{msg.payload.toFixed(2)}}",
+        "min": 0,
+        "max": "14",
+        "colors": [
+            "#ff0000",
+            "#00ff00",
+            "#400080"
+        ],
+        "seg1": "6.5",
+        "seg2": "8",
+        "diff": false,
+        "className": "",
+        "x": 360,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "3c80471c017148b6",
+        "type": "mqtt in",
+        "z": "16aef213c13ea96c",
+        "name": "",
+        "topic": "v3/weather-sim@ttn/devices/generate-red/up",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "c0b6a2ef66ac65f2",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 190,
+        "y": 60,
+        "wires": [
+            [
+                "f93a0188389f648e",
+                "10e614d33009d347"
+            ]
+        ]
+    },
+    {
+        "id": "10e614d33009d347",
+        "type": "debug",
+        "z": "16aef213c13ea96c",
+        "name": "debug 6",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 520,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "05bbae3e32796254",
+        "type": "ui_group",
+        "name": "Dissolved Oxygen",
+        "tab": "bc87e5c3527dec05",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "4f1b3f1c1f3ee6e1",
+        "type": "ui_group",
+        "name": "Water Temp",
+        "tab": "bc87e5c3527dec05",
+        "order": 4,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "687271a22ceb2cba",
+        "type": "modbus-client",
+        "name": "OpenPLC",
+        "clienttype": "tcp",
+        "bufferCommands": true,
+        "stateLogEnabled": false,
+        "queueLogEnabled": false,
+        "failureLogEnabled": true,
+        "tcpHost": "127.0.0.1",
+        "tcpPort": "502",
+        "tcpType": "DEFAULT",
+        "serialPort": "/dev/ttyUSB",
+        "serialType": "RTU-BUFFERD",
+        "serialBaudrate": "9600",
+        "serialDatabits": "8",
+        "serialStopbits": "1",
+        "serialParity": "none",
+        "serialConnectionDelay": "100",
+        "serialAsciiResponseStartDelimiter": "0x3A",
+        "unit_id": "1",
+        "commandDelay": "1",
+        "clientTimeout": "1000",
+        "reconnectOnTimeout": true,
+        "reconnectTimeout": "2000",
+        "parallelUnitIdsAllowed": true,
+        "showWarnings": true,
+        "showLogs": true
+    },
+    {
+        "id": "3ea47541bfdc5abe",
+        "type": "ui_group",
+        "name": "pH",
+        "tab": "bc87e5c3527dec05",
+        "order": 3,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "c0b6a2ef66ac65f2",
+        "type": "mqtt-broker",
+        "name": "TTN Weather Sim",
+        "broker": "au1.cloud.thethings.network",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "bc87e5c3527dec05",
+        "type": "ui_tab",
+        "name": "Home",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]

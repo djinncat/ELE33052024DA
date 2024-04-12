@@ -1,0 +1,287 @@
+[
+    {
+        "id": "b48b9f9049a5e5e9",
+        "type": "tab",
+        "label": "Mapper Service",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "cd8b35e397dc4617",
+        "type": "http request",
+        "z": "b48b9f9049a5e5e9",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://mapper.kist.ws/upload?studentid=61019160&nickname=KHB&temp={{{temp}}}&hum={{{pH}}}&rain={{{DO}}}&message=aquaponics%20system&valid",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 730,
+        "y": 400,
+        "wires": [
+            [
+                "eeb1f7bdf17dbe31"
+            ]
+        ]
+    },
+    {
+        "id": "eeb1f7bdf17dbe31",
+        "type": "debug",
+        "z": "b48b9f9049a5e5e9",
+        "name": "msg",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 850,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "aabda99c56e79ae7",
+        "type": "function",
+        "z": "b48b9f9049a5e5e9",
+        "name": "base64 to bytes",
+        "func": "// Converting data in base64 to bytes\nvar bytes = Buffer.from(msg.payload.uplink_message.frm_payload,'base64');\nmsg.payload = bytes; //overwriting the payload with contained bytes\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 160,
+        "y": 120,
+        "wires": [
+            [
+                "e0ac28c006d94f16",
+                "fc2edc4f86d06b41",
+                "7b1cc0e4b722619e"
+            ]
+        ]
+    },
+    {
+        "id": "e0ac28c006d94f16",
+        "type": "function",
+        "z": "b48b9f9049a5e5e9",
+        "name": "decodetemp",
+        "func": "const bytes = msg.payload;\nconst temperature = ((bytes[8]<<8)+bytes[9]);  //bytes 8 and 9 hold the temperature values\nlet temp_kelvin = temperature/100;  // temperature is transmitted in kelvin*100. So needs to be divided by 100\nlet temp_C = temp_kelvin - 273.15; // converting from kelvin to celcius\nmsg.payload = temp_C.toFixed(2) +\"°C\"; // overwrite the msg to display temp in celcius\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 150,
+        "y": 240,
+        "wires": [
+            [
+                "f4087936ba9bd709"
+            ]
+        ]
+    },
+    {
+        "id": "f4087936ba9bd709",
+        "type": "change",
+        "z": "b48b9f9049a5e5e9",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "temp",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 380,
+        "y": 240,
+        "wires": [
+            [
+                "6cc22a92434c22f3"
+            ]
+        ]
+    },
+    {
+        "id": "fc2edc4f86d06b41",
+        "type": "function",
+        "z": "b48b9f9049a5e5e9",
+        "name": "decodepH",
+        "func": "const bytes = msg.payload;\nconst ph_data = ((bytes[6]<<8)+bytes[7]);  //bytes 6 and 7 hold the pH value\nlet ph_value = ph_data /10; // the transmission was multiplied by 10, so need to divide by 10 for true value\nlet ph_info = ph_value / (100/14); // scaling the data to the range 0-14 for pH level\nmsg.payload = ph_info.toFixed(2);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 150,
+        "y": 320,
+        "wires": [
+            [
+                "52fb21a3f8996b9e"
+            ]
+        ]
+    },
+    {
+        "id": "7b1cc0e4b722619e",
+        "type": "function",
+        "z": "b48b9f9049a5e5e9",
+        "name": "decodeDO",
+        "func": "const bytes = msg.payload;\nlet DO_data = ((bytes[0]<<8)+bytes[1]);  // the range of bytes 0-1 are 0-5000\nlet DO_value = DO_data / (5000/120); //scaling to the range 0-120%\nmsg.payload = DO_value.toFixed(2)+\"%\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 150,
+        "y": 400,
+        "wires": [
+            [
+                "38bb68c57f1516cf"
+            ]
+        ]
+    },
+    {
+        "id": "52fb21a3f8996b9e",
+        "type": "change",
+        "z": "b48b9f9049a5e5e9",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "pH",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 370,
+        "y": 320,
+        "wires": [
+            [
+                "6cc22a92434c22f3"
+            ]
+        ]
+    },
+    {
+        "id": "38bb68c57f1516cf",
+        "type": "change",
+        "z": "b48b9f9049a5e5e9",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "DO",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 370,
+        "y": 400,
+        "wires": [
+            [
+                "6cc22a92434c22f3"
+            ]
+        ]
+    },
+    {
+        "id": "6cc22a92434c22f3",
+        "type": "join",
+        "z": "b48b9f9049a5e5e9",
+        "name": "info",
+        "mode": "custom",
+        "build": "array",
+        "property": "",
+        "propertyType": "full",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": false,
+        "timeout": "",
+        "count": "3",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "num",
+        "reduceFixup": "",
+        "x": 610,
+        "y": 320,
+        "wires": [
+            [
+                "cd8b35e397dc4617",
+                "eeb1f7bdf17dbe31"
+            ]
+        ]
+    },
+    {
+        "id": "6bdf1593847cd293",
+        "type": "mqtt in",
+        "z": "b48b9f9049a5e5e9",
+        "name": "",
+        "topic": "v3/weather-sim@ttn/devices/generate-red/up",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "c0b6a2ef66ac65f2",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 190,
+        "y": 40,
+        "wires": [
+            [
+                "aabda99c56e79ae7"
+            ]
+        ]
+    },
+    {
+        "id": "c0b6a2ef66ac65f2",
+        "type": "mqtt-broker",
+        "name": "TTN Weather Sim",
+        "broker": "au1.cloud.thethings.network",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    }
+]
